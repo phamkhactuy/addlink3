@@ -51,9 +51,9 @@ class admindatabase
         return $query;
     }
 
-    function insert_link($idlink,$urllink,$titlelink,$category1id,$categoryid)
+    function insert_link($idlink,$urllink,$titlelink,$keywords,$description,$category1id,$categoryid)
     {
-        $sql="INSERT INTO tuypklink(link_id,link_url,link_title,category1_id,category_id) VALUES (".$idlink.", '".$urllink."', '".$titlelink."',".$category1id.",".$categoryid." )";
+        $sql="INSERT INTO tuypklink(link_id,link_url,link_title,link_keywork,link_summary,category1_id,category_id) VALUES (".$idlink.", '".$urllink."', '".$titlelink."', '".$keywords."', '".$description."',".$category1id.",".$categoryid." )";
         $query=mysql_query($sql);
         return $query;
     }
@@ -123,6 +123,25 @@ class admindatabase
         return $url;
         }
     }
+    function metadate($url){
+        $url='http://snipplr.com/view/69365/php-get-url-title/'; //url to fetch, must start with http
+        $res = file_get_contents($url);
+        preg_match("~(.*?)~", $res, $match);//fetching title
+        $title = $match[1];
+        $tags = get_meta_tags($url); //fetching the meta tags, keywords and description
+        echo $title."</br>"; // printing title
+        echo $tags['keywords']."</br>"; // printing keywords
+        return $tags['description']."</br>"; // printing description
+    }
+    function getkeywords($url){
+        $tags = get_meta_tags($url); //fetching the meta tags, keywords and description
+        return $tags['keywords'].""; // printing keywords
+    }
+    function getdescription($url){
+        $tags = get_meta_tags($url); //fetching the meta tags, keywords and description
+        return $tags['description'].""; // printing keywords
+    }
+
 	function linkcuoi()
 	{
 		$sql="SELECT * FROM addlinkc ORDER BY id DESC LIMIT 0,1";

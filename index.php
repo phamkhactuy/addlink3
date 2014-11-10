@@ -1,4 +1,7 @@
+
+
 <?php
+
 session_start();
 if(!isset($_SESSION['admin']))
     echo "<script language='javascript' type='text/javascript'>window.location = 'dangnhap.php';</script>";
@@ -29,9 +32,11 @@ if(isset($_REQUEST['themlink']))
     $idlink=$_REQUEST['idlink'];
     $link=$_REQUEST['link'];
     $titlelink=$db->getTitle2($link);
+    $keywords=$db->getkeywords($link);
+    $description=$db->getdescription($link);
     $category1id=$category1add;
     $categoryid=$categoryadd;
-    $db->insert_link($idlink,$link,$titlelink,$category1id,$categoryid);
+    $db->insert_link($idlink,$link,$titlelink,$keywords,$description,$category1id,$categoryid);
     echo "<script>location.href='index.php?category=".$categoryid."&category1=".$category1id."'</script>"	;
 }
 
