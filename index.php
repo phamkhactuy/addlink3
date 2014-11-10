@@ -1,7 +1,7 @@
 <?php
 session_start();
 if(!isset($_SESSION['admin']))
-echo "<script language='javascript' type='text/javascript'>window.location = 'dangnhap.php';</script>";
+    echo "<script language='javascript' type='text/javascript'>window.location = 'dangnhap.php';</script>";
 include('include/admindatabase.php');
 $db=new admindatabase();
 if(isset($_GET['category1']))
@@ -9,27 +9,30 @@ if(isset($_GET['category1']))
 else $category1=1;
 
 if(isset($_REQUEST['category']))
-{
     $category=$_REQUEST['category'];
-}
-else
-{
-    $category=1;
-}
+else $category=1;
 
 if(isset($_GET['ts']))
     $ts=$_GET['ts'];
 else $ts=1;
-//
+
 if(isset($_REQUEST['themlink']))
 {
+    if(isset($_REQUEST['category1id']))
+    $category1add=$_REQUEST['category1id'];
+    else $category1add=1;
+
+    if(isset($_REQUEST['categoryid']))
+    $categoryadd=$_REQUEST['categoryid'];
+    else $categoryadd=1;
+
     $idlink=$_REQUEST['idlink'];
     $link=$_REQUEST['link'];
-    $titlelink=$db->getTitle($link);
-    $category1id=$category1;
-    $categoryid=$category;
+    $titlelink=$db->getTitle2($link);
+    $category1id=$category1add;
+    $categoryid=$categoryadd;
     $db->insert_link($idlink,$link,$titlelink,$category1id,$categoryid);
-    //echo "<script>location.href='index.php?category=".$categoryid."&category1=".$category1id."'</script>"	;
+    echo "<script>location.href='index.php?category=".$categoryid."&category1=".$category1id."'</script>"	;
 }
 
 ?>
@@ -97,7 +100,6 @@ if(isset($_REQUEST['themlink']))
             include('include/link.php');
             switch($ts)
             {
-                case '1':include('include/echo1.php');break;
                 case 'dangxuat':include('include/dangxuat.php');break;
                 //danh muc
                 //case 'link': include('include/link.php'); break;

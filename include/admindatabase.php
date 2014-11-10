@@ -96,15 +96,33 @@ class admindatabase
     }
     function getTitle1($url){
 
-    if( !($data = file_get_contents($url)) ) return false;
+        if( !($data = file_get_contents($url)) ) return false;
 
-    if( preg_match("#(.+)<\/title>#iU", $data, $t))  {
-        return trim($t[1]);
-    } else {
-        return false;
+        if( preg_match("#(.+)<\/title>#iU", $data, $t))  {
+            return trim($t[1]);
+        } else {
+            return false;
+        }
     }
-}
-
+    function getTitle2( $url ){
+        try{
+        $doc = new DOMDocument();
+        @$doc->loadHTMLFile( $url );
+        $xpath = new DOMXPath( $doc );
+        $title = $xpath->query( '//title' );
+        $title = $title->item( 0 );
+        if( !( isset( $title->nodeValue ) ) ){
+        return $url;
+        }
+        $title = $title->nodeValue;
+        if( is_string( $title ) ){
+        return $title;
+        }
+        return $url;
+        }catch (Exception $e) {
+        return $url;
+        }
+    }
 	function linkcuoi()
 	{
 		$sql="SELECT * FROM addlinkc ORDER BY id DESC LIMIT 0,1";

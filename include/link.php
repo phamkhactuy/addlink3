@@ -23,6 +23,7 @@ if(isset($_GET['action']))
 				echo $row_category['category_name'];
 			}
 		}
+
 		if($category1!=0)
 		{
 			echo "=>";
@@ -58,8 +59,8 @@ if(isset($_GET['action']))
 	}
 	?>
 	<h5>Link: <input type="text" style="width:400px;" name="link" value="" /></h5>
-	<input type="hidden"  name="category1id" value="<?php echo $category1;?>" />
-	<input type="hidden"  name="categoryid" value="<?php echo $category;?>" />
+	<input type="hidden"  name="category1id" value="<?php echo $category1; ?>" />
+	<input type="hidden"  name="categoryid" value="<?php echo $category; ?>" />
 	<input type="submit" name="themlink" value="Lưu" />
 
 <?php
